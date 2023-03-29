@@ -1,0 +1,43 @@
+DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS Person;
+DROP TABLE IF EXISTS Event;
+DROP TABLE IF EXISTS Authtoken;
+
+CREATE TABLE User(
+    username    TEXT    PRIMARY KEY,
+    password    TEXT    NOT NULL,
+    email       TEXT    NOT NULL    UNIQUE,
+    firstName   TEXT    NOT NULL,
+    lastName    TEXT    NOT NULL,
+    gender      TEXT    CHECK( gender IN ('m', 'f') )   NOT NULL DEFAULT 'm',
+    personId    TEXT    NOT NULL,
+);
+
+CREATE TABLE Person (
+    personID    TEXT    PRIMARY KEY,
+    associatedUsername  TEXT    NOT NULL,
+    firstName   TEXT    NOT NULL,
+    lastName    TEXT    NOT NULL,
+    gender      TEXT    CHECK( gender IN ('m', 'f') )   NOT NULL DEFAULT 'm',
+    fatherID    TEXT,
+    motherID    TEXT,
+    spouseID    TEXT,
+);
+
+CREATE TABLE Event (
+    eventID     TEXT    PRIMARY KEY,
+    associatedUsername  TEXT    NOT NULL,
+    personID    TEXT    NOT NULL,
+    latitude    REAL    NOT NULL,
+    longitude   REAL    NOT NULL,
+    country     TEXT    NOT NULL,
+    city        TEXT    NOT NULL,
+    eventType   TEXT    NOT NULL,
+    year        INTEGER NOT NULL,
+
+);
+
+CREATE TABLE Authtoken (
+    authtoken   TEXT    NOT NULL    UNIQUE,
+    username    TEXT    NOT NULL,
+);
